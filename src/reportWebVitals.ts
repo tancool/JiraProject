@@ -1,3 +1,4 @@
+// 是用来完成一个埋点上报的工作
 import { ReportHandler } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // 用于测试 React的UseEffct的闭包情况.
+    // 该问题主要应用于修改页面标题时使用的.
+    const test = () => {
+      let num = 0
+      return () => {
+        num += 1
+        const message = `现在的num值是${num}`
+        return function unmount() {
+          console.log(message)
+        }
+      }
+
+    }
+    const add = test()
+    const unmount = add()
+    add()
+    const unmount1 = add()
+    unmount()
+    unmount1() 
+  </script>
+</body>
+
+</html>
