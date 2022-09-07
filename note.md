@@ -1192,6 +1192,12 @@ export const useEditProject = () => {
     - 这个是React的惰性初始.可以参见官网.惰性初始只会在组件的初始渲染中起作用.后续渲染时,将会被忽略.如果参数需要通过复杂计算获得,则可以传入一个参数.在函数中计算并返回初始的state.此函数只在初始渲染时被调用
         - 在state中传入一个函数,react并不认为这是一个需要保存的函数.而是要获得函数返回后调用的值.
         - 惰性操作是非常消耗性能的操作.
+- 保存函数的两种方法
+  - 一种是使用useState. const [state,setState] = useState(()=>()=>{}).
+  - 还有一种方式是通过useRef进行保存.
+    - useRef并不是一种状态,uesRef的值发生更改,并不会触发组件的重新渲染.
+      - 可以通过 使用 useRef.current = willChangeValue 对ref的值进行重新的修改. 
+        - 但是,如果已经将之前的值赋给事件,则之前的ref会持续被引用,而不会被销毁.
 ```
 import "./styles.css";
 import React from "react";
