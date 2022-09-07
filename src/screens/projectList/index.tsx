@@ -9,6 +9,7 @@ import { useAsync } from 'utils/useAsync';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useUrlQueryParam } from 'utils/url';
+import { useProjectsSearchParams } from './util';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -18,9 +19,9 @@ const Index = () => {
   //   personId: ''
   // });
 
-  const [keys,setKeys] = useState<('name' | 'personId')[]>(['name', 'personId']);
-  const [params,setParam] = useUrlQueryParam(keys); // 同步
-  
+  // const [keys, setKeys] = useState<('name' | 'personId')[]>(['name', 'personId']);
+
+  const [params, setParam] = useProjectsSearchParams();
   // const [list, setList] = useState([]);
   // const [users, setUsers] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +30,6 @@ const Index = () => {
   // 只要 setParams每次一更新,页面都会被重新渲染. 该自定义Hook,也都会被执行.
   // 会在每次执行的时候,在Hook里去做一些判断.
   const debouncedParams = useDebounce(params, 200);
-
   // const client = useHttp();
   // const { run, isLoading, error, data: list } = useAsync<Project[]>();
 

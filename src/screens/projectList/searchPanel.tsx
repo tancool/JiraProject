@@ -2,6 +2,9 @@
 /* @jsxImportSource @emotion/react */
 import React from 'react';
 import { Form, Input, Select } from 'antd';
+import { Project } from './list';
+import { IdSelect } from 'components/id-select';
+import { UserSelect } from 'components/useSelect';
 
 export interface User {
   id: number;
@@ -14,10 +17,11 @@ export interface User {
 
 interface SearchProps {
   users: User[];
-  params: {
-    name: string;
-    personId: string;
-  };
+  params: Partial<Pick<Project, 'name' | 'personId'>>
+  // params: {
+  //   name: string;
+  //   personId: number;
+  // };
   setParam: (param: SearchProps['params']) => void;
 }
 const SearchPanel = ({ params, setParam, users }: SearchProps) => {
@@ -35,7 +39,17 @@ const SearchPanel = ({ params, setParam, users }: SearchProps) => {
       </Form.Item>
 
       <Form.Item>
-        <Select value={params.personId} onChange={value => {
+        <UserSelect
+          defalutOptionName={'负责人'}
+          value={params.personId}
+          onChange={value => {
+            setParam({
+              ...params,
+              personId: value
+            })
+          }}
+        />
+        {/* <Select value={params.personId} onChange={value => {
           setParam({
             ...params,
             personId: value
@@ -49,7 +63,7 @@ const SearchPanel = ({ params, setParam, users }: SearchProps) => {
             </Select.Option>)
             )
           }
-        </Select>
+        </Select> */}
       </Form.Item>
 
     </Form>

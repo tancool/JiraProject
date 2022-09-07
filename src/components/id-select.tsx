@@ -8,7 +8,7 @@ type SelectProps = React.ComponentProps<typeof Select>;
 interface IdSelectProps extends Omit<SelectProps, 'value' | 'onChange' | 'options'> {
   value: Raw | null | undefined,
   onChange: (value?: number) => void,
-  defalutOptionName: string,
+  defalutOptionName?: string,
   options?: { name: string, id: number }[]
 }
 
@@ -23,17 +23,17 @@ interface IdSelectProps extends Omit<SelectProps, 'value' | 'onChange' | 'option
 export const IdSelect = (props: IdSelectProps) => {
   const { value, onChange, defalutOptionName, options, ...restProps } = props;
   return <Select
-    value={toNumber(value)}
-    onChange={value => onChange(toNumber(value || undefined))}
+    value={options?.length ? toNumber(value) : 0}
+    onChange={value => onChange(toNumber(value) || undefined)}
     {...restProps}
   >
     {
       defalutOptionName ? <Select.Option value={0}>{defalutOptionName}</Select.Option> : null
     }
     {
-      options?.map(option => <Select.Option key={option.id}>{option.name}</Select.Option>)
+      options?.map(option => <Select.Option key={option.id} value={option.id}>{option.name}</Select.Option>)
     }
   </Select>
 }
 
-const toNumber = (value: unknown) => isNaN(Number(value)) ? undefined : Number(value);
+const toNumber = (value: unknown) => isNaN(Number(value)) ? 0 : Number(value);
