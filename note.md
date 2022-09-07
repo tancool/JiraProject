@@ -1328,6 +1328,7 @@ export default function App() {
 ```
 - 而如果使用 : `<button onClick={callBackRef.current}>触发</button>`
      - 这个读取的是第一次加载的值.并不是动态更新之后的值.所以并不会随着改变
+     - onClick由于引用之前的current函数,之前的current被持续引用,并不会被销毁.
 
 ## 46_完成编辑后刷新功能
 - Promise的状态是不可逆的

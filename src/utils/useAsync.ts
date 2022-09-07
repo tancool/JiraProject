@@ -38,6 +38,9 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     ...defaultInitialState,
     ...initialState
   });
+
+  // 刷新功能(使用的是惰性初始化)
+  const [retry, setRetry] = useState(() => () => { });
   // 请求成功
   const setData = (data: D) => setState({
     // 执行setState的时候,会重新刷新页面
@@ -53,10 +56,16 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   });
 
   // run用来触发异步请求
-  const run = (promise: Promise<D>) => {
+  const run = (promise: Promise<D>, runConfig?: ({ retry: () => Promise<D> })) => {
     if (!promise || !promise.then) {
       throw new Error('请传入 Promise 类型数据');
     }
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig);
+      }
+    });
+
     setState({ ...state, stat: 'loading' });
     return promise.then(data => {
 
@@ -82,6 +91,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     isError: state.stat === 'error', // 这个Error只适用于异步的情况, 同步的Error抛出需要及时抛出错误 => return Promise.reject(error);
     isSuccess: state.stat === 'success',
     run,
+    retry,
     setData,
     setError,
     ...state

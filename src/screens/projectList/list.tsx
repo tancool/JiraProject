@@ -18,10 +18,11 @@ export interface Project {
 
 // 这里是一种透传的方式
 interface ListProps extends TableProps<Project> {
-  users: User[]
+  users: User[],
+  refreach?: () => void
 }
 
-const List = ({ users, ...props }: ListProps) => {
+const List = ({ users, refreach, ...props }: ListProps) => {
 
   const { mutate } = useEditProject();
   return (<Table pagination={false} columns={[
@@ -30,7 +31,9 @@ const List = ({ users, ...props }: ListProps) => {
       render(value, project) {
         return <Pin
           checked={project.pin}
-          onCheckedChange={ pin => mutate({id:project.id, pin})}
+          onCheckedChange={pin => mutate({ id: project.id, pin }).then(() => {
+            refreach();
+          })}
         />
       }
     },

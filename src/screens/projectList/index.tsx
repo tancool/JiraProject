@@ -33,7 +33,7 @@ const Index = () => {
   // const client = useHttp();
   // const { run, isLoading, error, data: list } = useAsync<Project[]>();
 
-  const { isLoading, error, data: list } = useProjects(debouncedParams);
+  const { isLoading, error, data: list, retry } = useProjects(debouncedParams);
 
   const { data: users } = useUsers();
   useDocumentTitle('项目列表', false);
@@ -83,6 +83,7 @@ const Index = () => {
         dataSource={list || []}
         users={users || []}
         loading={isLoading}
+        refreach={retry}
       />
     </Container>
   )
