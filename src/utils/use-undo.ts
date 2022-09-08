@@ -1,62 +1,82 @@
 import React, { useCallback, useState } from "react";
 
 export const useUndo = <T>(initialPresent: T) => {
-  const [past, setPast] = useState<T[]>([]);
-  const [present, setPresent] = useState(initialPresent);
-  const [future, setFuture] = useState<T[]>([]);
+  // const [past, setPast] = useState<T[]>([]);
+  // const [present, setPresent] = useState(initialPresent);
+  // const [future, setFuture] = useState<T[]>([]);
 
-  const canUndo = past.length !== 0;
-  const canRedo = future.length !== 0;
+
+  const [state, setState] = useState<{ past: T[], present: T, future: T[] }>({
+    past: [],
+    present: initialPresent,
+    future: []
+  });
+
+
+  const canUndo = state.past.length !== 0;
+  const canRedo = state.future.length !== 0;
 
   const undo = useCallback(() => { //回退
-    if (!canUndo) {
-      return;
-    }
+    setState(currentState => { // currentState表示现在的state的值
+      const { past, present, future } = currentState;
+      if (past.length === 0) {
+        return currentState; // 表示不进行更新.
+      }
+      const previous = past[past.length - 1];
+      const newPast = past.slice(0, past.length - 1);
 
-    const previous = past[past.length - 1];
-    const newPast = past.slice(0, past.length - 1);
-
-    setPast(newPast);
-    setPresent(previous);
-    setFuture([present, ...future]);
-  }, [canUndo, future, past, present]);
+      return {
+        past: newPast,
+        present: previous,
+        future: [present, ...future]
+      }
+    })
+  }, []);
 
   const redo = useCallback(() => {
-    if (!canRedo) {
-      return;
-    }
-    const next = future[0];
-    const newFuture = future.slice(1);
-    setPast([...past, present]);
-    setPresent(next);
-    setFuture(newFuture);
-  }, [canRedo, future, past, present]);
+    setState(currentState => {
+      const { past, present, future } = currentState;
+      if (future.length === 0) {
+        return currentState
+      }
+      const next = future[0];
+      const newFuture = future.slice(1);
+
+      return {
+        past: [...past, present],
+        present: next,
+        future: newFuture
+      }
+    })
+  }, []);
 
 
   const set = useCallback((newPresent: T) => {
-    if (newPresent === present) {
-      return;
-    }
-    setPast([...past, present]);
-    setPresent(newPresent);
-    setFuture([]); // 插入的话,就不存在redo的概念了
-  }, [past, present]);
-
-  const reset = useCallback((newPresent: T) => {
-    setPast([]);
-    setPresent(newPresent);
-    setFuture([]);
+    setState(currentState => {
+      const { past, present, future } = currentState;
+      if (newPresent === present) {
+        return currentState;
+      }
+      return {
+        past: [...past, present],
+        present: newPresent,
+        future: []
+      }
+    })
   }, []);
 
-  return {
-    past,
-    present,
-    future,
-    set,
-    reset,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
-  }
+  const reset = useCallback((newPresent: T) => {
+    setState(() => {
+      return {
+        past: [],
+        present: newPresent,
+        future: []
+      }
+    })
+  }, []);
+
+  return [
+    state,
+    { set, reset, undo, redo, canUndo, canRedo }
+  ]
 }
