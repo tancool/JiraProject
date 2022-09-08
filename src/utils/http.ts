@@ -1,6 +1,7 @@
 import qs from "qs";
 import * as auth from 'auto-provider';
 import { useAuth } from "context/auth-context";
+import { useCallback } from 'react';
 
 interface Config extends RequestInit {
   token?: string;
@@ -49,7 +50,7 @@ const http = (endpoint: string, { data, token, headers, ...customConfig }: Confi
 
 const useHttp = () => {
   const { user } = useAuth();
-  return (...[endPoint, config]: Parameters<typeof http>) => http(endPoint, { ...config, token: user?.token });
+  return useCallback((...[endPoint, config]: Parameters<typeof http>) => http(endPoint, { ...config, token: user?.token }), [user?.token]);
 }
 export {
   http,

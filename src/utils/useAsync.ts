@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from "utils";
 
 
@@ -44,21 +44,21 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   // 刷新功能(使用的是惰性初始化)
   const [retry, setRetry] = useState(() => () => { });
   // 请求成功
-  const setData = (data: D) => setState({
+  const setData = useCallback((data: D) => setState({
     // 执行setState的时候,会重新刷新页面
     data,
     stat: 'success',
     error: null,
-  });
+  }), []);
 
-  const setError = (error: Error) => setState({
+  const setError = useCallback((error: Error) => setState({
     error,
     stat: 'error',
     data: null
-  });
+  }), []);
 
   // run用来触发异步请求
-  const run = (promise: Promise<D>, runConfig?: ({ retry: () => Promise<D> })) => {
+  const run = useCallback((promise: Promise<D>, runConfig?: ({ retry: () => Promise<D> })) => {
     if (!promise || !promise.then) {
       throw new Error('请传入 Promise 类型数据');
     }
@@ -68,7 +68,8 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
       }
     });
 
-    setState({ ...state, stat: 'loading' });
+    // setState({ ...state, stat: 'loading' });
+    setState(prevState => ({ ...prevState, stat: 'loading' }))
     return promise.then(data => {
       if (mountedRef.current) {// 为true表示组件已经为被挂载的状态
         // setState的时候,将会自动刷新页面.
@@ -84,7 +85,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
       }
       return error;
     })
-  }
+  }, [config.throwOnError, mountedRef, setData, setError]);
 
   // Hook返回的内容=> 返回的内容比较多(因为异步操作就是有很多信息可以获取的).
   return {

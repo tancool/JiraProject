@@ -1365,7 +1365,7 @@ export const useMountedRef = () => {
             });
         ```
 - useMemo和useCallBack都是为了依赖而存在的.具体说,就是非基本类型的依赖.
-    - 如果定义的非基本类型想要做依赖,就需要使用useMemo || useCallBack 把非基本类型限制住.不要每次页面渲染的时候都会重新创建.
+    - 如果定义的非基本类型,想要做依赖,就需要使用useMemo || useCallBack 把非基本类型限制住.不要每次页面渲染的时候都会重新创建.
     - 经验之谈 : 
         - 如果在自定义的Hook中返回函数,那么非常大的概率使用的是useCallback.
         - 理解下 **useMemo和useHook**的区别.
