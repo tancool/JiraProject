@@ -1339,6 +1339,7 @@ export default function App() {
 
 ## 47_useCallback应用,优化异步请求
 - 优化 组件已经退出并销毁,但是Promise仍然会执行.之后执行state导致报`Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.`的问题
+    - *该报错在React的目前版本中未出现.* 
     - 使用以下的组件进行判断状态.
 
 ```

@@ -70,11 +70,25 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
 export const resetRute = () => window.location.href = window.location.origin;
 
 
+/**
+ * 返回组件的挂载状态, 如果还没挂载或者已经卸载, 返回false. 反之,返回true.
+*/
+export const useMountedRef = ()=>{
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return ()=>{
+      mountedRef.current = false;
+    }
+  })
+  return mountedRef;
+}
 
 
 
 //**********
-// 无关代码
+// 无关次项目的代码
 
 // 这个useHook是作业.
 // 这里<T>和 T[]. 理解怎么使用的即可.

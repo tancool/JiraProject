@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 
 interface State<D> {
@@ -39,6 +40,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     ...initialState
   });
 
+  const mountedRef = useMountedRef();
   // 刷新功能(使用的是惰性初始化)
   const [retry, setRetry] = useState(() => () => { });
   // 请求成功
@@ -68,10 +70,10 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
 
     setState({ ...state, stat: 'loading' });
     return promise.then(data => {
-
-      // setState的时候,将会自动刷新页面.
-      setData(data);
-
+      if (mountedRef.current) {// 为true表示组件已经为被挂载的状态
+        // setState的时候,将会自动刷新页面.
+        setData(data);
+      }
       // 执行 return的时候,是为了方便有函数需要及时拿到结果
       return data;
 
