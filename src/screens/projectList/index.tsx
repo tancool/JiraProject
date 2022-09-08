@@ -4,16 +4,17 @@ import List, { Project } from './list';
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from 'utils';
 import { useHttp } from 'utils/http';
 import styled from '@emotion/styled';
-import { Typography } from 'antd';
+import { Typography, Button } from 'antd';
 import { useAsync } from 'utils/useAsync';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useUrlQueryParam } from 'utils/url';
 import { useProjectsSearchParams } from './util';
+import { Row } from 'components/lib';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Index = () => {
+const Index = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
   // const [_, setParam] = useState({ // 课时 8-6
   //   name: '',
   //   personId: ''
@@ -72,7 +73,10 @@ const Index = () => {
   // });
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row between={true}>
+        <h1>项目列表</h1>
+        <Button onClick={() => props.setProjectModalOpen(true)}>创建项目</Button>
+      </Row>
       <SearchPanel
         params={params}
         setParam={setParam}
@@ -80,6 +84,7 @@ const Index = () => {
       />
       {error ? <Typography.Text type={'danger'}>{error.message}</Typography.Text> : null}
       <List
+        setProjectModalOpen={props.setProjectModalOpen}
         dataSource={list || []}
         users={users || []}
         loading={isLoading}

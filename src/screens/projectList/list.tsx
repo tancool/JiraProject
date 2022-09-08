@@ -1,5 +1,6 @@
 
-import { Table, TableProps } from 'antd';
+import { Table, TableProps, Dropdown, Menu } from 'antd';
+import { ButtonNoPadding } from 'components/lib';
 import { Pin } from 'components/pin';
 import dayjs from 'dayjs';
 import React from 'react';
@@ -20,9 +21,10 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[],
   refreach?: () => void
+  setProjectModalOpen: (isOpen: boolean) => void
 }
 
-const List = ({ users, refreach, ...props }: ListProps) => {
+const List = ({ users, refreach,setProjectModalOpen, ...props }: ListProps) => {
 
   const { mutate } = useEditProject();
   return (<Table pagination={false} columns={[
@@ -64,6 +66,17 @@ const List = ({ users, refreach, ...props }: ListProps) => {
         </span>
       }
     },
+    {
+      render(value, project) {
+        return <Dropdown overlay={<Menu>
+          <Menu.Item key={'edit'}>
+            <ButtonNoPadding type={'link'} onClick={()=>setProjectModalOpen(true)}>编辑</ButtonNoPadding>
+          </Menu.Item>
+        </Menu>}>
+          <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
+        </Dropdown>
+      }
+    }
   ]}
     // 这里的props是一种透传的方式
     {...props}

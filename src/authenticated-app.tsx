@@ -1,63 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from 'context/auth-context';
 import ProjectListScreen from './screens/projectList';
 import styled from '@emotion/styled';
-import { Row } from 'components/lib';
+import { ButtonNoPadding, Row } from 'components/lib';
 import { ReactComponent as SoftWareLogo } from 'assets/software-logo.svg';
 import { Button, Dropdown, Menu } from 'antd';
 import { Navigate, Route, Routes } from 'react-router';
 import { ProjectScreen } from 'screens/project';
 import { BrowserRouter as Router } from 'react-router-dom'
 import { resetRute } from 'utils';
+import { ProjectModal } from 'screens/projectList/project-modal';
+import { ProjectPopover } from 'components/project-popover';
 export const AuthenticatedApp = () => {
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return <div>
-    <PageHeader />
-    <Main>
-      <Router>
-        <Routes>
-          <Route path={'/projects'} element={<ProjectListScreen />}></Route>
-          <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
-          <Route path='*' element={<Navigate to={'/projects'} />} />
-        </Routes>
-      </Router>
-    </Main>
+    <Container>
+      <PageHeader setProjectModalOpen={setProjectModalOpen} />
+      <Main>
+        <Router>
+          <Routes>
+            <Route path={'/projects'} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen}/>}></Route>
+            <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
+            <Route path='*' element={<Navigate to={'/projects'} />} />
+          </Routes>
+        </Router>
+      </Main>
+      <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
+    </Container>
   </div>
 }
 
-const PageHeader = () => {
-  const { logout, user } = useAuth();
+const PageHeader = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
   return <Header between={true}>
     <HeaderLeft gap={true}>
-      <Button type={'link'} onClick={resetRute}>
+      <ButtonNoPadding type={'link'} onClick={resetRute}>
         <SoftWareLogo width={'18rem'} color={'rgb(38,132,255)'} />
-      </Button>
-      <h2>项目</h2>
-      <h2>用户</h2>
+      </ButtonNoPadding>
+      <ProjectPopover setProjectModalOpen={props.setProjectModalOpen}/>
+      <span>用户</span>
     </HeaderLeft>
     <HeaderRight>
-      {/* 这里的TS可能是由于版本的错误,先不去管.*/}
-      {/* @ts-ignore */}
-      <Dropdown overlay={
-        <Menu>
-          <Menu.Item key={'logout'}>
-            <Button type={'link'} onClick={logout}>登出</Button>
-          </Menu.Item>
-        </Menu>
-      }
-      >
-        <Button type={'link'} onClick={e => e.preventDefault()}>
-          Hi, {user?.name}
-        </Button>
-      </Dropdown>
+      <User />
     </HeaderRight>
   </Header>
 }
 
 
 
-const Container = styled.div`
+const Container = styled.header`
   display: grid;
-  grid-template-rows:6rem 1fr 6rem;
+  grid-template-rows: 6rem 1fr 6rem;
   /* 以下注释的CSS只是为了演示CSS属性的作用,在此项目里实际上没有用到 */
   /* grid-template-columns: 20rem 1fr 20rem;
   grid-template-areas: 
@@ -80,7 +72,7 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
 `
 const Main = styled.main`
-  grid-area: main;
+  /* grid-area: main; */
 `
 // const Nav = styled.nav`
 //   grid-area: nav;
@@ -91,3 +83,22 @@ const Main = styled.main`
 // const Footer = styled.footer`
 //   grid-area: footer;
 // `
+
+
+const User = () => {
+  const { logout, user } = useAuth();
+  {/* 这里的TS可能是由于版本的错误,先不去管.*/ }
+  {/* @ts-ignore */ }
+  return <Dropdown overlay={
+    <Menu>
+      <Menu.Item key={'logout'}>
+        <Button type={'link'} onClick={logout}>登出</Button>
+      </Menu.Item>
+    </Menu>
+  }
+  >
+    <Button type={'link'} onClick={e => e.preventDefault()}>
+      Hi, {user?.name}
+    </Button>
+  </Dropdown>
+}

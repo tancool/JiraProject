@@ -1373,6 +1373,15 @@ export const useMountedRef = () => {
 ## 48_状态提升,组合组件与控制反转[上]
 
 - 关于React中的变量提升 => 组件在代码上下文中,可以在执行代码前进行调用.
+  - 使用变量可以在声明变量之前.
+```
+// 和这段代码类似. 这里的d没有调用,所以并不会报错
+const f = ()=> console.log(d);
+const d = 13;
+```
+
+- const 和 let也会进行变量提升, 提升到暂时性死区里.
+
 ```
 export const AuthenticateApp = () => {
     return (
@@ -1402,7 +1411,7 @@ const PageHeader = () => {
 - 不止一次使用到的代码可以考虑抽象.
     - 不重复写一样的代码.
 - 多层使用到同一个状态,叫做 prop drawing.
-    - 使得状态变得难以维护,定义和状态离得太远了.
+    - 使得状态变得难以维护,最大的问题是 => 定义和状态离得太远了.
     - 并且耦合性变高
     - 解决办法
         - 使用组件组合`（component composition）`.
@@ -1413,6 +1422,7 @@ const PageHeader = () => {
         - 讲到了控制反转的设计模式 : `https://zhuanlan.zhihu.com/p/60995312`
             - 现在引擎和轮胎的创建不再直接依赖它们的构造函数，而是通过 IoC 容器 (container) 来创建，使得 Car 类 和 Engine，Tires 没有了强耦合关系。代码中不再依赖于具体，而是依赖于 container 抽象容器，即要针对接口编程，不针对实现编程。过去思维中想要什么依赖，需要自己去 “拉” 改为抽象容器主动 “推” 给你，你只管使用实体就可以了。这是依赖倒转 (DIP) 的一种表现形式。
         - 使用React-redux
+
 ## 50_合并组件状态_实现useUndo
 - 这节课学习的主要是redux以及redux toolkit,以及尝试自己尝试实现一个undo的hook
     - use-undo可以对state进行退回以及前进的相关操作.也是一个非常适合讲解use_Reducer的案例.
