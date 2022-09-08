@@ -14,7 +14,7 @@ import { Row } from 'components/lib';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Index = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
+const Index = (props: { projectButton:JSX.Element }) => {
   // const [_, setParam] = useState({ // 课时 8-6
   //   name: '',
   //   personId: ''
@@ -75,7 +75,7 @@ const Index = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>创建项目</Button>
+        {props.projectButton}
       </Row>
       <SearchPanel
         params={params}
@@ -84,7 +84,7 @@ const Index = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
       />
       {error ? <Typography.Text type={'danger'}>{error.message}</Typography.Text> : null}
       <List
-        setProjectModalOpen={props.setProjectModalOpen}
+        {...props}
         dataSource={list || []}
         users={users || []}
         loading={isLoading}

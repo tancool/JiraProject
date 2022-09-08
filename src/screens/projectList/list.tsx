@@ -21,10 +21,10 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[],
   refreach?: () => void
-  setProjectModalOpen: (isOpen: boolean) => void
+  projectButton: JSX.Element
 }
 
-const List = ({ users, refreach,setProjectModalOpen, ...props }: ListProps) => {
+const List = ({ users, refreach,projectButton, ...props }: ListProps) => {
 
   const { mutate } = useEditProject();
   return (<Table pagination={false} columns={[
@@ -70,7 +70,7 @@ const List = ({ users, refreach,setProjectModalOpen, ...props }: ListProps) => {
       render(value, project) {
         return <Dropdown overlay={<Menu>
           <Menu.Item key={'edit'}>
-            <ButtonNoPadding type={'link'} onClick={()=>setProjectModalOpen(true)}>编辑</ButtonNoPadding>
+            {projectButton}
           </Menu.Item>
         </Menu>}>
           <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
