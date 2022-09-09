@@ -6,7 +6,6 @@ import { ButtonNoPadding } from './lib';
 
 export const ProjectPopover = (props: { projectButton: JSX.Element }) => {
   const { data: projects, isLoading } = useProjects();
-  console.log(projects);
 
   const pinnedProjects = projects?.filter(project => project.pin);
 
@@ -14,8 +13,8 @@ export const ProjectPopover = (props: { projectButton: JSX.Element }) => {
     <Typography.Text type={'secondary'}>收藏项目</Typography.Text>
     <List>
       {
-        pinnedProjects?.map(project => <List.Item>
-          <List.Item.Meta title={project.name} key={project.id} />
+        pinnedProjects?.map(project => <List.Item key={project.id}>
+          <List.Item.Meta title={project.name} />
         </List.Item>)
       }
     </List>
