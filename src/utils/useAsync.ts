@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import { useMountedRef } from "utils";
 
 
@@ -30,32 +30,42 @@ const defaultInitialState: State<null> = {
 const defaultConfig = {
   throwOnError: false
 }
+
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+  const mountedRef = useMountedRef();
+  return useCallback((...args: T[]) => { mountedRef.current ? dispatch(...args) : void 0 }, [dispatch, mountedRef]);
+}
+
 // initialState 用户传入的State
 export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defaultConfig) => { // ts中的typeof 用于获取一个变量或者属性的类型
 
   const config = { ...defaultConfig, ...initialConfig };
 
-  const [state, setState] = useState<State<D>>({ // 指定State的类型
-    ...defaultInitialState,
+  // const [state, setState] = useState<State<D>>({ // 指定State的类型
+  //   ...defaultInitialState,
+  //   ...initialState
+  // });
+  const reducer = (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action });
+  const [state, dispatch] = useReducer(reducer, {
     ...initialState
-  });
+  })
 
-  const mountedRef = useMountedRef();
+  const safeDispatch = useSafeDispatch(dispatch);
   // 刷新功能(使用的是惰性初始化)
   const [retry, setRetry] = useState(() => () => { });
   // 请求成功
-  const setData = useCallback((data: D) => setState({
+  const setData = useCallback((data: D) => safeDispatch({
     // 执行setState的时候,会重新刷新页面
     data,
     stat: 'success',
     error: null,
-  }), []);
+  }), [safeDispatch]);
 
-  const setError = useCallback((error: Error) => setState({
+  const setError = useCallback((error: Error) => safeDispatch({
     error,
     stat: 'error',
     data: null
-  }), []);
+  }), [safeDispatch]);
 
   // run用来触发异步请求
   const run = useCallback((promise: Promise<D>, runConfig?: ({ retry: () => Promise<D> })) => {
@@ -69,12 +79,9 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     });
 
     // setState({ ...state, stat: 'loading' });
-    setState(prevState => ({ ...prevState, stat: 'loading' }))
+    safeDispatch({ stat: 'loading' });
     return promise.then(data => {
-      if (mountedRef.current) {// 为true表示组件已经为被挂载的状态
-        // setState的时候,将会自动刷新页面.
-        setData(data);
-      }
+      setData(data);
       // 执行 return的时候,是为了方便有函数需要及时拿到结果
       return data;
 
@@ -85,7 +92,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
       }
       return error;
     })
-  }, [config.throwOnError, mountedRef, setData, setError]);
+  }, [config.throwOnError,safeDispatch, setData, setError]);
 
   // Hook返回的内容=> 返回的内容比较多(因为异步操作就是有很多信息可以获取的).
   return {
