@@ -1439,10 +1439,13 @@ const PageHeader = () => {
         - 如果在适合使用useReducer的地方,使用useReducer.那么会帮助代码变得更加合理
 - 实际代码里实现的就是一个轻量的状态管理,但是不是全局状态管理.
 ## 52_Reducx用法介绍
+
 - 全局状态管理的最佳实践 : 全局状态越少越简单越好.
+
 - redux可以用到react / vue 以及js中.redux是一个可预测的状态容器.
     - github上的redux的介绍
     - 可预测指的是,状态是为一个纯函数
+
 - react-redux是用来连接redux和react.js的
 - 用法参照git上面的counter-vanilla
 
