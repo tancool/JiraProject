@@ -1495,19 +1495,6 @@ const PageHeader = () => {
           - 由于原理为闭包, 所以极少的情况下会出现难以理解的问题
 - **到后期需要了解React的高阶组件,以及高阶组件解决了什么问题**
 
-```
-// 类似于这样
-const CountContainer = connect(mapStateToProps, mapDispatchToProps)(CountUI) // 这个是API的用法
-```
-- react非常注重抽象嗲吗和代码复用
-- react中的hook的发展历程
-    - mixin
-    - hoc
-        - 服用代码的方案,类似于python中的装饰器.
-    - 组件和展示分离模式
-    - render props
-    - hook
-        - 实现原理是闭包
 ## 54_为什么我们需要react-thunk
 - 异步操作被认为不是纯函数.
 - redux的设计理念和react是相似的.
