@@ -9,7 +9,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ProjectScreen } from 'screens/project';
 import { BrowserRouter as Router } from 'react-router-dom'
 import { resetRute } from 'utils';
-import { ProjectModal } from 'screens/projectList/project-modal';
+import { ProjectModal } from 'screens/projectList/projectModal';
 import { ProjectPopover } from 'components/project-popover';
 export const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
