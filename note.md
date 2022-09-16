@@ -1520,7 +1520,7 @@ const PageHeader = () => {
 - redux会报一个错
     - could not find react-redux context value; please ensure the component is wrapped in a <Provider>
     - redux也是使用的是context / provider
-    - redux推荐使用的是在最外层包裹一个Provider
+    - **redux推荐使用的是在最外层包裹一个Provider**
 - **这一块的实现的逻辑比较绕,需要自己去梳理下**
 
 ## 057_使用redux-thunk管理登陆状态

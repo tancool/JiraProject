@@ -10,11 +10,13 @@ import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useUrlQueryParam } from 'utils/url';
 import { useProjectsSearchParams } from './util';
-import { Row } from 'components/lib';
+import { ButtonNoPadding, Row } from 'components/lib';
+import { useDispatch, useSelector } from 'react-redux';
+import { projectListActions, selectProjectModalOpen } from './projectListSlice';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Index = (props: { projectButton:JSX.Element }) => {
+const Index = (props: {}) => {
   // const [_, setParam] = useState({ // 课时 8-6
   //   name: '',
   //   personId: ''
@@ -38,7 +40,8 @@ const Index = (props: { projectButton:JSX.Element }) => {
 
   const { data: users } = useUsers();
   useDocumentTitle('项目列表', false);
-
+  const dispatch = useDispatch();
+  const projectModalOpen = useSelector(selectProjectModalOpen);
   // useEffect(() => {
 
   // fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParams))}`).then(async res => {
@@ -75,7 +78,9 @@ const Index = (props: { projectButton:JSX.Element }) => {
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={() => dispatch(projectListActions.openProjectModal())}>
+          创建项目
+        </ButtonNoPadding>
       </Row>
       <SearchPanel
         params={params}

@@ -4,9 +4,11 @@ import { ButtonNoPadding } from 'components/lib';
 import { Pin } from 'components/pin';
 import dayjs from 'dayjs';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useEditProject } from 'utils/project';
 import { User } from './searchPanel';
+import { projectListActions } from 'screens/projectList/projectListSlice';
 
 export interface Project {
   id: number;
@@ -21,12 +23,14 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[],
   refreach?: () => void
-  projectButton: JSX.Element
 }
 
-const List = ({ users, refreach,projectButton, ...props }: ListProps) => {
-
+const List = ({ users, refreach, ...props }: ListProps) => {
+  
   const { mutate } = useEditProject();
+
+  const dispatch = useDispatch();
+
   return (<Table pagination={false} columns={[
     {
       title: <Pin checked={true} disabled={true} />,
@@ -70,7 +74,10 @@ const List = ({ users, refreach,projectButton, ...props }: ListProps) => {
       render(value, project) {
         return <Dropdown overlay={<Menu>
           <Menu.Item key={'edit'}>
-            {projectButton}
+            <ButtonNoPadding 
+            type={'link'}
+            onClick={() => dispatch(projectListActions.openProjectModal())}
+            >编辑</ButtonNoPadding>
           </Menu.Item>
         </Menu>}>
           <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
