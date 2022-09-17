@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/auth-context';
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { LongButton } from 'unauthenticatedApp';
 import { useAsync } from 'utils/useAsync';
 
@@ -8,7 +9,9 @@ import { useAsync } from 'utils/useAsync';
 
 function LoginScreen({ onError }: { onError: (error: Error) => void }) {
   const { login } = useAuth();
-  const { run, isLoading } = useAsync(null,{throwOnError:true});
+  const { run, isLoading } = useAsync(null, { throwOnError: true });
+
+  const dispatch = useDispatch();
   // 原生DOM的登录方式
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();

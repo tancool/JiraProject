@@ -1,7 +1,6 @@
 import React from 'react';
 import Login from './unauthenticatedApp/login';
 import Index from 'screens/projectList';
-import TestUseContext from './detailHook/testUseContext';
 import './App.css';
 import { useAuth } from 'context/auth-context';
 import { AuthenticatedApp } from 'authenticated-app';
@@ -14,7 +13,6 @@ function App() {
     <div className="App">
       {/* <Index/> */}
       {/* <Login /> */}
-      {/* <TestUseContext/> */}
 
       <ErrorBoundary fallbackRender={FullPageErrorFallback}>
         {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}

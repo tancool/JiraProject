@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { projectListSlice } from './../screens/projectList/projectListSlice';
+import { projectListSlice } from '../screens/projectList/projectListSlice';
+import { authSlice } from './auth.slice';
 
 export const rootReducer = {
-  projectList: projectListSlice.reducer
+  projectList: projectListSlice.reducer,
+  auth: authSlice.reducer
 };
 
 export const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

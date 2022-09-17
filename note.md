@@ -1526,7 +1526,7 @@ const PageHeader = () => {
 ## 057_使用redux-thunk管理登陆状态
 - 主要讲的是使用redux-toolkit的默认异步状态管理方案redux-thunk来管理登陆状态
     - context和redux是成竞争关系的.
-
+- 使用自定义hook返回方法的时候, 要记得添加useCallback.
 ## 058_使用url参数管理项目模态框状态
 - 在原本的方案里使用到的是context,并不会使用到redux
     - 线上项目的ProjectModal使用的url进行状态.
