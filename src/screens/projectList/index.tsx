@@ -10,7 +10,7 @@ import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useUrlQueryParam } from 'utils/url';
 import { useProjectModal, useProjectsSearchParams } from './util';
-import { ButtonNoPadding, Row } from 'components/lib';
+import { ButtonNoPadding, ErrorBox, Row } from 'components/lib';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -34,7 +34,7 @@ const Index = (props: {}) => {
   // const client = useHttp();
   // const { run, isLoading, error, data: list } = useAsync<Project[]>();
 
-  const { isLoading, error, data: list, retry } = useProjects(debouncedParams);
+  const { isLoading, error, data: list } = useProjects(debouncedParams);
 
   const { data: users } = useUsers();
   useDocumentTitle('项目列表', false);
@@ -84,12 +84,11 @@ const Index = (props: {}) => {
         setParam={setParam}
         users={users || []}
       />
-      {error ? <Typography.Text type={'danger'}>{error.message}</Typography.Text> : null}
+      <ErrorBox error={error} />
       <List
         dataSource={list || []}
         users={users || []}
         loading={isLoading}
-        refreach={retry}
       />
     </Container>
   )

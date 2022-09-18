@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Spin, Typography,Button } from "antd";
+import { Spin, Typography, Button } from "antd";
 import { DevTools } from "jira-dev-tool";
 
 // 可以重用的一些项目级别的组件
@@ -36,7 +36,7 @@ export const FullPageLoading = () => (
 export const FullPageErrorFallback = ({ error }: { error: Error }) => (
   <FullPage>
     <DevTools />
-    <Typography.Text type={'danger'}>{error.message}</Typography.Text>
+    <ErrorBox error={error} />
   </FullPage>
 )
 
@@ -44,3 +44,13 @@ export const FullPageErrorFallback = ({ error }: { error: Error }) => (
 export const ButtonNoPadding = styled(Button)`
 padding: 0;
 `
+// 类型守卫
+const isError = (value: any): value is Error => value?.message;
+
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  // 鸭子模型
+  if (isError(error)) {
+    return <Typography.Text type={'danger'}>{error.message}</Typography.Text>
+  }
+  return null;
+}

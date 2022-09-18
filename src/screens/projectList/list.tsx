@@ -12,7 +12,7 @@ import { useProjectModal } from './util';
 export interface Project {
   id: number;
   name: string;
-  personId: number;
+  personId: number; 
   pin: boolean;
   organization: string;
   created: number
@@ -21,10 +21,9 @@ export interface Project {
 // 这里是一种透传的方式
 interface ListProps extends TableProps<Project> {
   users: User[],
-  refreach?: () => void
 }
 
-const List = ({ users, refreach, ...props }: ListProps) => {
+const List = ({ users, ...props }: ListProps) => {
   const { projectModalOpen, open } = useProjectModal()
   const { mutate } = useEditProject();
   return (<Table pagination={false} columns={[
@@ -33,9 +32,7 @@ const List = ({ users, refreach, ...props }: ListProps) => {
       render(value, project) {
         return <Pin
           checked={project.pin}
-          onCheckedChange={pin => mutate({ id: project.id, pin }).then(() => {
-            refreach();
-          })}
+          onCheckedChange={pin => mutate({ id: project.id, pin })}
         />
       }
     },
