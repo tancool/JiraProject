@@ -12,7 +12,7 @@ import { useProjectModal } from './util';
 export interface Project {
   id: number;
   name: string;
-  personId: number; 
+  personId: number;
   pin: boolean;
   organization: string;
   created: number
@@ -66,11 +66,9 @@ const List = ({ users, ...props }: ListProps) => {
     {
       render(value, project) {
         return <Dropdown overlay={<Menu>
-          <Menu.Item key={'edit'}>
-            <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>
-              编辑
-            </ButtonNoPadding>
-          </Menu.Item>
+          <Menu.Item key={'edit'}>编辑</Menu.Item>
+          <Menu.Item key={'delete'}>删除</Menu.Item>
+          {/* <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>编辑</ButtonNoPadding> */}
         </Menu >}>
           <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
         </Dropdown >

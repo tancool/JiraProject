@@ -1550,6 +1550,7 @@ const PageHeader = () => {
     - 这个缓存在整个软件所有的地方都可以访问缓存,也可以对缓存进行更新.
     - 把redux的全局状态.换一个思路去理解.理解为缓存.reqct-query类似于redis的思路
 - 用以上的方法去理解react-query, 心智负担就会少很多.
+
 ## 060_类型守卫,用useQuery缓存工程列表
 - 安装react-query.目前使用的版本是3.34
 - 如果是unknow,是不可以读取上面任何的属性的
@@ -1570,6 +1571,7 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 }
 ```
 - react最擅长的就是获取列表数据.这样react-query就更多的扮演到之前的useAsync的角色
+
 
 ## 061_编辑和添加工程功能[上]
 - 主要编写了编辑状态的相关信息
