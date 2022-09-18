@@ -1543,12 +1543,13 @@ const PageHeader = () => {
      close   
     ] as const
 ```
-## 059_使用react-query来处理服务器缓存  
+## 059_使用react-query来处理服务器缓存
+
 - react-query: 把数据用缓存的思路来进行处理.这个缓存是概念上的缓存
     - 此外,还有一个类似react-query的库.叫做SWR
     - 这个缓存在整个软件所有的地方都可以访问缓存,也可以对缓存进行更新.
     - 把redux的全局状态.换一个思路去理解.理解为缓存.reqct-query类似于redis的思路
-
+- 用以上的方法去理解react-query, 心智负担就会少很多.
 ## 060_类型守卫,用useQuery缓存工程列表
 - 安装react-query.目前使用的版本是3.34
 - 如果是unknow,是不可以读取上面任何的属性的
