@@ -7,6 +7,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useEditProject } from 'utils/project';
 import { User } from './searchPanel';
+import { useProjectModal } from './util';
 
 export interface Project {
   id: number;
@@ -21,11 +22,10 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[],
   refreach?: () => void
-  projectButton: JSX.Element
 }
 
-const List = ({ users, refreach,projectButton, ...props }: ListProps) => {
-
+const List = ({ users, refreach, ...props }: ListProps) => {
+  const { projectModalOpen, open } = useProjectModal()
   const { mutate } = useEditProject();
   return (<Table pagination={false} columns={[
     {
@@ -70,11 +70,13 @@ const List = ({ users, refreach,projectButton, ...props }: ListProps) => {
       render(value, project) {
         return <Dropdown overlay={<Menu>
           <Menu.Item key={'edit'}>
-            {projectButton}
+            <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>
+              编辑
+            </ButtonNoPadding>
           </Menu.Item>
-        </Menu>}>
+        </Menu >}>
           <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
-        </Dropdown>
+        </Dropdown >
       }
     }
   ]}

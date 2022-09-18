@@ -6,7 +6,20 @@ export const useProjectsSearchParams = () => {
   const keys = ['name', 'personId'];
   const [params, setParam] = useUrlQueryParam(keys); // 同步
   return [
-    useMemo(()=>({ ...params, personId: Number(params.personId) || undefined }),[params]),
+    useMemo(() => ({ ...params, personId: Number(params.personId) || undefined }), [params]),
     setParam
   ] as const
+};
+
+export const useProjectModal = () => {
+  const [{ projectCreate }, setProjectCreate] = useUrlQueryParam(['projectCreate']);
+
+  const open = () => setProjectCreate({ projectCreate: true });;
+  const close = () => setProjectCreate({ projectCreate: false });
+
+  return {
+    projectModalOpen: projectCreate === 'true',
+    open,
+    close
+  }
 }

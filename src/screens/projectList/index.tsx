@@ -9,12 +9,12 @@ import { useAsync } from 'utils/useAsync';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useUrlQueryParam } from 'utils/url';
-import { useProjectsSearchParams } from './util';
-import { Row } from 'components/lib';
+import { useProjectModal, useProjectsSearchParams } from './util';
+import { ButtonNoPadding, Row } from 'components/lib';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Index = (props: { projectButton:JSX.Element }) => {
+const Index = (props: {}) => {
   // const [_, setParam] = useState({ // 课时 8-6
   //   name: '',
   //   personId: ''
@@ -38,7 +38,7 @@ const Index = (props: { projectButton:JSX.Element }) => {
 
   const { data: users } = useUsers();
   useDocumentTitle('项目列表', false);
-
+  const { projectModalOpen, open } = useProjectModal();
   // useEffect(() => {
 
   // fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParams))}`).then(async res => {
@@ -75,7 +75,9 @@ const Index = (props: { projectButton:JSX.Element }) => {
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>
+          创建项目
+        </ButtonNoPadding>
       </Row>
       <SearchPanel
         params={params}
@@ -84,7 +86,6 @@ const Index = (props: { projectButton:JSX.Element }) => {
       />
       {error ? <Typography.Text type={'danger'}>{error.message}</Typography.Text> : null}
       <List
-        {...props}
         dataSource={list || []}
         users={users || []}
         loading={isLoading}
