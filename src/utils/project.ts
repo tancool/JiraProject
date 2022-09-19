@@ -58,7 +58,7 @@ export const useAddProject = () => {
   // }
 
   const queryClient = useQueryClient();
-  return useMutation((params: Partial<Project>) => client(`projects/${params.id}`, {
+  return useMutation((params: Partial<Project>) => client(`projects`, {
     data: params,
     method: 'POST'
   }), {

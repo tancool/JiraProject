@@ -24,15 +24,17 @@ interface ListProps extends TableProps<Project> {
 }
 
 const List = ({ users, ...props }: ListProps) => {
-  const { projectModalOpen, open } = useProjectModal()
+  const { startEdit } = useProjectModal();
   const { mutate } = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const editProject = (id: number) => () => startEdit(id);
   return (<Table pagination={false} columns={[
     {
       title: <Pin checked={true} disabled={true} />,
       render(value, project) {
         return <Pin
           checked={project.pin}
-          onCheckedChange={pin => mutate({ id: project.id, pin })}
+          onCheckedChange={pinProject(project.id)}
         />
       }
     },
@@ -65,11 +67,22 @@ const List = ({ users, ...props }: ListProps) => {
     },
     {
       render(value, project) {
-        return <Dropdown overlay={<Menu>
-          <Menu.Item key={'edit'}>编辑</Menu.Item>
-          <Menu.Item key={'delete'}>删除</Menu.Item>
-          {/* <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>编辑</ButtonNoPadding> */}
-        </Menu >}>
+        return <Dropdown overlay={
+          <Menu
+            items={[
+              {
+                key: 'edit',
+                label: <ButtonNoPadding type={'link'} >编辑</ButtonNoPadding>,
+                onClick:editProject(project.id)
+              },
+              {
+                key: 'delete',
+                label: <ButtonNoPadding type={'link'} >删除</ButtonNoPadding>,
+                onClick: () => { console.log('删除'); }
+              }
+            ]}>
+          </Menu >
+        }>
           <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
         </Dropdown >
       }

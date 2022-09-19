@@ -40,7 +40,7 @@ const SearchPanel = ({ params, setParam, users }: SearchProps) => {
 
       <Form.Item>
         <UserSelect
-          defalutOptionName={'负责人'}
+          defaultOptionName={'负责人'}
           value={params.personId}
           onChange={value => {
             setParam({
