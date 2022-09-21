@@ -1,11 +1,11 @@
 import React, { ReactNode, useState } from 'react';
 import * as auth from 'auto-provider';
-import { User } from 'screens/projectList/searchPanel';
 import { useMount } from 'utils';
 import { http } from 'utils/http';
 import { useAsync } from 'utils/useAsync';
 import { FullPageErrorFallback, FullPageLoading } from 'components/lib';
 import { useQueryClient } from 'react-query';
+import { User } from 'types/user';
 
 interface AuthForm {
   username: string;

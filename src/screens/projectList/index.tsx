@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SearchPanel from 'screens/projectList/searchPanel';
-import List, { Project } from './list';
+import List from './list';
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from 'utils';
 import { useHttp } from 'utils/http';
 import styled from '@emotion/styled';

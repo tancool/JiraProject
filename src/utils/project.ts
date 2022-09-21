@@ -1,8 +1,8 @@
 import { log } from "console";
 import { useCallback, useEffect } from "react";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
-import { Project } from "screens/projectList/list";
 import { useProjectsSearchParams } from "screens/projectList/util";
+import { Project } from "types/project";
 import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic.options";

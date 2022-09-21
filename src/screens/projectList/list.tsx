@@ -5,18 +5,11 @@ import { Pin } from 'components/pin';
 import dayjs from 'dayjs';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Project } from 'types/project';
+import { User } from 'types/user';
 import { useDeleteProject, useEditProject } from 'utils/project';
-import { User } from './searchPanel';
 import { useProjectModal, useProjectQueryKey } from './util';
 
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number
-}
 
 // 这里是一种透传的方式
 interface ListProps extends TableProps<Project> {
