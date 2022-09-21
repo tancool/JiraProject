@@ -17,8 +17,12 @@ export const ProjectModal = () => {
   const onFinish = (values: any) => {
     mutateAsync({ ...editingProject, ...values }).then(() => {
       form.resetFields();
-      close();
     })
+  }
+
+  const closeModal = () => {
+    form.resetFields();
+    close();
   }
 
   useEffect(() => {
@@ -27,7 +31,7 @@ export const ProjectModal = () => {
 
   const title = editingProject ? '编辑项目' : '创建项目';
 
-  return <Drawer forceRender={true} visible={projectModalOpen} width={'100%'} onClose={close}>
+  return <Drawer forceRender={true} visible={projectModalOpen} width={'100%'} onClose={closeModal}>
     <Container>
       {isLoading ? <Spin size={'large'} /> : <>
         <h1>{title}</h1>

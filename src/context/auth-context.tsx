@@ -5,6 +5,7 @@ import { useMount } from 'utils';
 import { http } from 'utils/http';
 import { useAsync } from 'utils/useAsync';
 import { FullPageErrorFallback, FullPageLoading } from 'components/lib';
+import { useQueryClient } from 'react-query';
 
 interface AuthForm {
   username: string;
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // useMount(() => bootstrapUser().then(setUser));
 
   const { data: user, error, isLoading, isIdle, isError, run, setData: setUser } = useAsync<User | null>();
-
+  const queryClient = useQueryClient();
   useMount(() => {
     run(bootstrapUser());
   });
@@ -51,7 +52,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
-  const logout = () => auth.logout().then(() => setUser(null));
+  const logout = () => auth.logout().then(() => {
+    setUser(null);
+    queryClient.clear();
+  });
 
   return <AuthContext.Provider value={{ user, login, register, logout }} children={children} />
 }
