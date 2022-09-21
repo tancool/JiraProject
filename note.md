@@ -1597,7 +1597,7 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
     - 状态提升 / 组合组件.比如说父组件传递props
 - 缓存状态
     - react-query / swr
-- 客户端状态
+- 客户端状态(比如说 用户是否登录 / Modal的打开或者关闭)
     - url[浏览器的url] / redux / context
 
 - 也有一种解决办法是全用同一种方式.比如说全用redux.但是这种方式会带来的问题是,会得到一个庞大的redux树.
