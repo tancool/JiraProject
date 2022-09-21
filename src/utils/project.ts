@@ -1,6 +1,8 @@
+import { log } from "console";
 import { useCallback, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "screens/projectList/list";
+import { useProjectsSearchParams } from "screens/projectList/util";
 import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./useAsync";
@@ -34,12 +36,26 @@ export const useEditProject = () => {
   // }
 
   const queryClient = useQueryClient();
+  const [searchParams] = useProjectsSearchParams();
+  const queryKey = ['projects', searchParams]
   return useMutation((params: Partial<Project>) => client(`projects/${params.id}`, {
     method: 'PATCH',
     data: params
   }), {
-    onSuccess: () => queryClient.invalidateQueries('projects')
-  })
+    // 成功时的回调函数
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
+    async onMutate(target: Partial<Project>) { // target存储的是当前的数据
+      const previousItems = queryClient.getQueriesData(queryKey)
+      queryClient.setQueriesData(queryKey, (old?: Project[]) => {
+        return old?.map(project => project.id === target.id ? { ...project, ...target } : project) || []
+      })
+
+      return { previousItems }
+    },
+    onError(error, newItem: Partial<Project>, context:any) {
+      queryClient.setQueriesData(queryKey, (context as { previousItems: Project }).previousItems)
+    }
+  },)
 }
 
 export const useAddProject = () => {
