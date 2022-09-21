@@ -12,7 +12,7 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
       () => keys.reduce((prev, key) => {
         return { ...prev, [key]: searchParams.get(key) };
       }, {} as { [key in K]: string }),
-      [searchParams])
+      [searchParams,keys])
     ,
     // setSearchParams // 这里如果直接这样传递出去的话,是不利于类型转换的.
     (params: Partial<{ [key in K]: unknown }>) => {

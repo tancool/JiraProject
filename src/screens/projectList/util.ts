@@ -23,7 +23,7 @@ export const useProjectModal = () => {
   const open = () => setProjectCreate({ projectCreate: true });
   const close = () => setUrlParams({ editingProjectId: undefined, projectCreate: undefined });
 
-  const startEdit = (id: number) =>setEditingProjectId({ editingProjectId: id });
+  const startEdit = (id: number) => setEditingProjectId({ editingProjectId: id });
   return {
     projectModalOpen: projectCreate === 'true' || !!editingProject,
     open,
@@ -32,4 +32,9 @@ export const useProjectModal = () => {
     isLoading,
     startEdit
   }
+}
+
+export const useProjectQueryKey = () => {
+  const [params] = useProjectsSearchParams();
+  return ['projects', params];
 }

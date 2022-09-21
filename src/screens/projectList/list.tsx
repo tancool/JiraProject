@@ -1,13 +1,13 @@
 
-import { Table, TableProps, Dropdown, Menu } from 'antd';
+import { Table, TableProps, Dropdown, Menu, Modal } from 'antd';
 import { ButtonNoPadding } from 'components/lib';
 import { Pin } from 'components/pin';
 import dayjs from 'dayjs';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useEditProject } from 'utils/project';
+import { useDeleteProject, useEditProject } from 'utils/project';
 import { User } from './searchPanel';
-import { useProjectModal } from './util';
+import { useProjectModal, useProjectQueryKey } from './util';
 
 export interface Project {
   id: number;
@@ -24,10 +24,8 @@ interface ListProps extends TableProps<Project> {
 }
 
 const List = ({ users, ...props }: ListProps) => {
-  const { startEdit } = useProjectModal();
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectQueryKey());
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
-  const editProject = (id: number) => () => startEdit(id);
   return (<Table pagination={false} columns={[
     {
       title: <Pin checked={true} disabled={true} />,
@@ -40,6 +38,7 @@ const List = ({ users, ...props }: ListProps) => {
     },
     {
       title: '名称',
+      key: 'name',
       sorter: (a, b) => a.name.localeCompare(b.name),
       render(_, project) {
         return <Link to={String(project.id)}>{project.name}</Link>;
@@ -47,10 +46,12 @@ const List = ({ users, ...props }: ListProps) => {
     },
     {
       title: '部门',
+      key: 'organization',
       dataIndex: 'organization',
     },
     {
       title: '负责人',
+      key:'name',
       render(_, project) {
         return <span key={project.id}>
           {users.find(user => user.id === Number(project.personId))?.name || '未知'}
@@ -59,6 +60,7 @@ const List = ({ users, ...props }: ListProps) => {
     },
     {
       title: '创建时间',
+      key: 'createdAt',
       render(_, project) {
         return <span>
           {project.created ? dayjs(project.created).format('YYYY-MM-DD') : '无'}
@@ -67,24 +69,7 @@ const List = ({ users, ...props }: ListProps) => {
     },
     {
       render(value, project) {
-        return <Dropdown overlay={
-          <Menu
-            items={[
-              {
-                key: 'edit',
-                label: <ButtonNoPadding type={'link'} >编辑</ButtonNoPadding>,
-                onClick:editProject(project.id)
-              },
-              {
-                key: 'delete',
-                label: <ButtonNoPadding type={'link'} >删除</ButtonNoPadding>,
-                onClick: () => { console.log('删除'); }
-              }
-            ]}>
-          </Menu >
-        }>
-          <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
-        </Dropdown >
+        return <More project={project} />
       }
     }
   ]}
@@ -119,6 +104,40 @@ const List = ({ users, ...props }: ListProps) => {
   //     </table>
   //   </div>
   // )
+}
+const More = ({ project }: { project: Project }) => {
+  const { startEdit } = useProjectModal();
+  const editProject = (id: number) => () => startEdit(id);
+  const { mutate: deleteProject } = useDeleteProject(useProjectQueryKey());
+  const confirmDeleteProject = (id: number) => {
+    Modal.confirm({
+      title: '确定删除这个项目吗',
+      content: '点击确定删除',
+      okText: '确定',
+      cancelText: '取消',
+      onOk() {
+        deleteProject({id});
+      }
+    })
+  }
+  return <Dropdown overlay={
+    <Menu
+      items={[
+        {
+          key: 'edit',
+          label: <ButtonNoPadding type={'link'} >编辑</ButtonNoPadding>,
+          onClick: editProject(project.id)
+        },
+        {
+          key: 'delete',
+          label: <ButtonNoPadding type={'link'} onClick={() => confirmDeleteProject(project.id)}>删除</ButtonNoPadding>,
+          onClick: () => { }
+        }
+      ]}>
+    </Menu >
+  }>
+    <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
+  </Dropdown >
 }
 
 export default List;
