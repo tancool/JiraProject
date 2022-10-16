@@ -4,7 +4,6 @@ import { EpicScreen } from 'screens/epic'
 import { KanbanScreen } from 'screens/kanban'
 
 export const ProjectScreen = () => {
-  console.log(window.location.pathname );
   
   return <div>
     <h1>ProjectScreen</h1>
