@@ -1636,7 +1636,10 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 ## 073_创建看板与任务
 - 创建面板的时候,乐观更新也是起作用的.说明了代码复用的好处.
 - 这节课完成了添加面板数据
-
+- 这节课产生了一个BUG:
+  - Check the render method of `KanbanColumn`. See https://reactjs.org/link/warning-keys for more information.
+  - 该BUG导致的原因大概是以内 KanbanColumn 组件中的map原因导致的, 但是map已经使用了唯一的id. 推测可能是由于后台返回输出的id不一致导致的.
+  - 这里做个标记, 有时间再来查找详细的错误
 ## 074_编辑任务功能
 - 主要完成了任务的编辑功能
 - 完成了搜索框的debounce设置.但是由于版本的原因.除了一些bug.现在搜索没有使用到debounce
