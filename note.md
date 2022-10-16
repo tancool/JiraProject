@@ -1626,7 +1626,7 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 ## 070_添加task bug 图标
 - 后端给一个type.用typeId获取type的明细
 - svg图片代码出现了一些错误.需要修改webpack配置,这里由于时间限制,手动修改了svg图片内容
-
+- 而像比如说 border-radius, 这些不希望随着元素变化而变化的数值, 可以不采用rem, 而使用px.
 ## 071_添加任务搜索功能
 - 完成了代码添加功能
 
