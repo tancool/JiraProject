@@ -4,6 +4,6 @@ import { Task } from './../types/task';
 
 export const useTasks = (param?: Partial<Task>) => {
   const client = useHttp();
-  return useQuery<Task[]>(['kanbans', param], () => client('kanbans', { data: { param } })
+  return useQuery<Task[]>(['kanbans', param], () => client('kanbans', { data: param})
   );
 }

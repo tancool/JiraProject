@@ -1,7 +1,7 @@
 import React from 'react';
 import { Kanban } from 'types/kanban';
 import { useTasks } from 'utils/task';
-import { useTaskSearchParams } from './util';
+import { useKanbanSearchParams, useTaskSearchParams } from './util';
 
 export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
   const { data: allTasks } = useTasks(useTaskSearchParams());
