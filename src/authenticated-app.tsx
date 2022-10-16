@@ -71,6 +71,8 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
 `
 const Main = styled.main`
+display: flex;
+overflow: hidden;
   /* grid-area: main; */
 `
 // const Nav = styled.nav`

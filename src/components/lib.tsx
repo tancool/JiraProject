@@ -3,7 +3,7 @@ import { Spin, Typography, Button } from "antd";
 import { DevTools } from "jira-dev-tool";
 
 // 可以重用的一些项目级别的组件
-export const Row = styled.div<{gap?: number | boolean,between?: boolean,marginBottom?: number}>`
+export const Row = styled.div<{ gap?: number | boolean, between?: boolean, marginBottom?: number }>`
 display: flex;
 align-items: center;
 justify-content: ${props => props.between ? 'space-between' : undefined};
@@ -49,3 +49,10 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
   }
   return null;
 }
+
+export const ScreenContainer = styled.div`
+ display:flex;
+ flex-direction: column;
+ padding:3.2rem;
+ width:100%;
+`;
