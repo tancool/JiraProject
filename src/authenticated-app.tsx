@@ -17,11 +17,13 @@ export const AuthenticatedApp = () => {
       <Router>
         <PageHeader />
         <Main>
-          <Routes>
-            <Route path={'/projects'} element={<ProjectListScreen/>}></Route>
-            <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
-            <Route path='*' element={<Navigate to={'/projects'} />} />
-          </Routes>
+          <FullWidthDiv>
+            <Routes>
+              <Route path={'/projects'} element={<ProjectListScreen />}></Route>
+              <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
+              <Route path='*' element={<Navigate to={'/projects'} />} />
+            </Routes>
+          </FullWidthDiv>
         </Main>
         <ProjectModal />
       </Router>
@@ -84,7 +86,9 @@ overflow: hidden;
 // const Footer = styled.footer`
 //   grid-area: footer;
 // `
-
+const FullWidthDiv = styled.div`
+width:100%
+`
 
 const User = () => {
   const { logout, user } = useAuth();

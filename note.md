@@ -1643,7 +1643,9 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 ## 074_编辑任务功能
 - 主要完成了任务的编辑功能
 - 完成了搜索框的debounce设置.但是由于版本的原因.除了一些bug.现在搜索没有使用到debounce
-
+- 如果在这里使用这个,会造成数据延缓载入的相关问题
+  - 具体问题原因还没有找到
+  - const debouncedName = useDebounce(param.name, 200) // 这里是使用的是debouncedName
 ## 075_看板和任务删除功能
 - 主要完成了看板页面的删除功能
 
