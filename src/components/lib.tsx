@@ -3,11 +3,7 @@ import { Spin, Typography, Button } from "antd";
 import { DevTools } from "jira-dev-tool";
 
 // 可以重用的一些项目级别的组件
-export const Row = styled.div<{
-  gap?: number | boolean,
-  between?: boolean,
-  marginBottom?: number
-}>`
+export const Row = styled.div<{gap?: number | boolean,between?: boolean,marginBottom?: number}>`
 display: flex;
 align-items: center;
 justify-content: ${props => props.between ? 'space-between' : undefined};
@@ -16,7 +12,6 @@ margin-bottom: ${props => props.marginBottom + 'rem'};
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   margin-right: ${props => typeof props.gap === 'number' ? props.gap + 'red' : props.gap ? '2rem' : undefined};
-
 }
 `
 
