@@ -26,8 +26,8 @@ export const ProjectScreen = () => {
     </Aside>
     <Main>
       <Routes>
-        <Route path={'/kanban'} element={<KanbanScreen />}></Route>
-        <Route path={'/epic'} element={<EpicScreen />}></Route>
+        <Route path={'/kanban'} element={<KanbanScreen />}/>
+        <Route path={'/epic'} element={<EpicScreen />}/>
         {/* 这个是 进入 /projects/:projectId/ 之后的一个兜底路由. */}
         <Route path='*' element={<Navigate to={window.location.pathname + '/kanban'} replace={true} />} />
       </Routes>
@@ -51,4 +51,5 @@ const Container = styled.div`
 display: grid;
 grid-template-columns: 16rem 1fr;
 overflow: hidden;
+width: 100%;
 `;

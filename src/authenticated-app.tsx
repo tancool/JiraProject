@@ -19,8 +19,8 @@ export const AuthenticatedApp = () => {
         <Main>
           <FullWidthDiv>
             <Routes>
-              <Route path={'/projects'} element={<ProjectListScreen />}></Route>
-              <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
+              <Route path={'/projects'} element={<ProjectListScreen />} />
+              <Route path={'/projects/:projectId/*'} element={<ProjectScreen />} />
               <Route path='*' element={<Navigate to={'/projects'} />} />
             </Routes>
           </FullWidthDiv>
