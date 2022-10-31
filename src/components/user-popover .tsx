@@ -20,7 +20,7 @@ export const UserPopover = () => {
     </List>
     <Divider />
   </ContentContainer>
-  return <Popover placement={'bottom'} content={content} onVisibleChange={() => refetch()}>
+  return <Popover placement={'bottom'} content={content} onOpenChange={() => refetch()}>
     <span>组员</span>
   </Popover>
 }

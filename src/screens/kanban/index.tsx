@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Spin } from 'antd';
 import { ScreenContainer } from 'components/lib';
+import { Profiler } from 'components/profiler';
 import React from 'react';
 import { useDocumentTitle } from 'utils';
 import { useKanbans } from 'utils/kanban';
@@ -17,17 +18,19 @@ export const KanbanScreen = () => {
   const { data: kanbans, isLoading: kanbanIsloading } = useKanbans(useKanbanSearchParams());
   const { isLoading: taskIsLoading } = useTasks(useTaskSearchParams());
   const isLoading = taskIsLoading || kanbanIsloading;
-  return <ScreenContainer>
-    <h1>{currentProject?.name}看板</h1>
-    <SearchPanel />
-    {isLoading ? <Spin size={'large'} /> : <ColumnsContainer>
-      {
-        kanbans?.map((kanban) => <KanbanColumn key={kanban.id} kanban={kanban} />)
-      }
-    <CreateKanban />
-    </ColumnsContainer>}
-    <TaskModal/>
-  </ScreenContainer>
+  return <Profiler id={'看板页面'}>
+    <ScreenContainer>
+      <h1>{currentProject?.name}看板</h1>
+      <SearchPanel />
+      {isLoading ? <Spin size={'large'} /> : <ColumnsContainer>
+        {
+          kanbans?.map((kanban) => <KanbanColumn key={kanban.id} kanban={kanban} />)
+        }
+        <CreateKanban />
+      </ColumnsContainer>}
+      <TaskModal />
+    </ScreenContainer>
+  </Profiler>
 };
 export const ColumnsContainer = styled.div`
 display: flex;

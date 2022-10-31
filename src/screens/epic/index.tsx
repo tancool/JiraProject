@@ -32,10 +32,10 @@ export const EpicScreen = () => {
       <h1>{currentProject?.name}任务组</h1>
       <Button type={'link'} onClick={() => setEpicCreateOpen(true)}>创建任务组</Button>
     </Row>
-    
+
     {/* bugfix: 这里的高度应该是自适应的 */}
     <List
-      style={{ overflowY: 'scroll',height:'1000px'}}
+      style={{ overflowY: 'scroll', height: '1000px' }}
       dataSource={epics}
       itemLayout={'vertical'}
       renderItem={epic => <List.Item>
@@ -53,7 +53,7 @@ export const EpicScreen = () => {
         />
         <div>
           {tasks?.filter(task => task.epicId === epic.id).map(task =>
-            <div>
+            <div key={task.id}>
               <Link
                 key={task.id}
                 to={`/projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}>

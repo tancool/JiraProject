@@ -24,7 +24,7 @@ export const ProjectPopover = () => {
       创建项目
     </ButtonNoPadding>
   </ContentContainer>
-  return <Popover placement={'bottom'} content={content} onVisibleChange={() => refetch()}>
+  return <Popover placement={'bottom'} content={content} onOpenChange={() => refetch()}>
     <span>项目</span>
   </Popover>
 }

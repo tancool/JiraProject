@@ -48,7 +48,7 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
       <More kanban={kanban} />
     </Row>
     <TaskContainer>
-      {tasks?.map(task => <TaskCard task={task} />)}
+      {tasks?.map(task => <TaskCard task={task} key={task.id} />)}
       <CreateTask kanbanId={kanban.id} />
     </TaskContainer>
   </Container >

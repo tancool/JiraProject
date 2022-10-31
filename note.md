@@ -1709,7 +1709,9 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
   
 ## 087_改变默认聚焦刷新设置(使用React自带组件查看性能信息)
 - React自带了一个性能追踪的功能 Profiler
+  - Profiler是作为一个父组件进行使用的
   - 一个项目里可以有多个Profiler
+  - Profiler是耗费性能的,所以在生产环境中是被禁用的.
 - 造成React会多次渲染是因为React Query的默认设置.在失去又得到焦点的时候,又会重新发送请求.
 
 ## 088_使用ReactProfiler追踪性能信息

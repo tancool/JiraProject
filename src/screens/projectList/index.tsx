@@ -10,7 +10,8 @@ import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useUrlQueryParam } from 'utils/url';
 import { useProjectModal, useProjectsSearchParams } from './util';
-import { ButtonNoPadding, ErrorBox, Row } from 'components/lib';
+import { ButtonNoPadding, ErrorBox, Row, ScreenContainer } from 'components/lib';
+import { Profiler } from 'components/profiler';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -72,25 +73,27 @@ const Index = (props: {}) => {
   //   client('users').then(setUsers);
   // });
   return (
-    <Container>
-      <Row between={true}>
-        <h1>项目列表</h1>
-        <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>
-          创建项目
-        </ButtonNoPadding>
-      </Row>
-      <SearchPanel
-        params={params}
-        setParam={setParam}
-        users={users || []}
-      />
-      <ErrorBox error={error} />
-      <List
-        dataSource={list || []}
-        users={users || []}
-        loading={isLoading}
-      />
-    </Container>
+    <Profiler id={'项目列表'}>
+      <ScreenContainer>
+        <Row between={true}>
+          <h1>项目列表</h1>
+          <ButtonNoPadding type={'link'} style={{ 'padding': '0' }} onClick={open}>
+            创建项目
+          </ButtonNoPadding>
+        </Row>
+        <SearchPanel
+          params={params}
+          setParam={setParam}
+          users={users || []}
+        />
+        <ErrorBox error={error} />
+        <List
+          dataSource={list || []}
+          users={users || []}
+          loading={isLoading}
+        />
+      </ScreenContainer>
+    </Profiler>
   )
 }
 const Container = styled.div`

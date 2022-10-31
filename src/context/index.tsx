@@ -7,11 +7,16 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 // 而这个AppProviders将App直接包裹住,也就起到了作用.
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
-    return (
-        <QueryClientProvider client={new QueryClient()}>
-            <AuthProvider>
-                {children}
-            </AuthProvider>
-        </QueryClientProvider>
-    )
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false
+      }
+    }
+  })
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>{children}</AuthProvider>
+    </QueryClientProvider>
+  )
 }
