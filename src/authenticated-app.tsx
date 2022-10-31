@@ -11,6 +11,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { resetRute } from 'utils';
 import { ProjectModal } from 'screens/projectList/project-modal';
 import { ProjectPopover } from 'components/project-popover';
+import { UserPopover } from 'components/user-popover ';
 export const AuthenticatedApp = () => {
   return <div>
     <Container>
@@ -38,7 +39,7 @@ const PageHeader = () => {
         <SoftWareLogo width={'18rem'} color={'rgb(38,132,255)'} />
       </ButtonNoPadding>
       <ProjectPopover />
-      <span>用户</span>
+      <UserPopover />
     </HeaderLeft>
     <HeaderRight>
       <User />
