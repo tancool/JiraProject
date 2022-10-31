@@ -16,7 +16,7 @@ interface ListProps extends TableProps<Project> {
   users: User[],
 }
 
-const List = ({ users, ...props }: ListProps) => {
+const List = React.memo(({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject(useProjectQueryKey());
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (<Table pagination={false} columns={[
@@ -97,7 +97,7 @@ const List = ({ users, ...props }: ListProps) => {
   //     </table>
   //   </div>
   // )
-}
+});
 const More = ({ project }: { project: Project }) => {
   const { startEdit } = useProjectModal();
   const editProject = (id: number) => () => startEdit(id);
