@@ -1686,14 +1686,20 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 
 ## 085_用代码分割优化性能
 - 使用useCallBack以及useMemo
-- 打包的时候,使用代码分割
-  - 在react使用 import(filePath)会自动进行代码分割.使用Create React App 即是开箱即用.
+- 打包(代码分割)
+  - 在React中,可以通过只改React的代码.使得Webpack自动给我们分开打包
+    - 在react使用 import(filePath)会自动进行代码分割.使用Create React App 即是开箱即用.
+      - 这个已经被写到了React的文档里.
   - 以及react-lazy => 其实是异步加载代码.使用代码的时候,再进行加载.
+    - 这个也已经写到了React文档里.
+  - 打包适用的场景: 用户现在只需要访问一部分的代码. 另一部分代码, 大部分用户不需要进行访问.
+    - 等到用户真正需要去访问这部分代码的时候, 再去加载这部分代码.
+  - 在此项目里的场景就是: 在未登录页面的时候, 不想要加载已经登录的代码.
 
 ## 086_使用ReactMemo优化组件性能
 - React默认的行为:父组件的state修改状态,子组件会重新被渲染[无论状态是否会对子组件造成影响].
   - 如何避免
-    - 使用 React.memo(). 和自己无关的状态发生改变的时候,会避免被渲染.
+    - 在子组件上使用 React.memo(). 和自己无关的状态发生改变的时候,会避免被渲染.
       - 被React.memo包裹的组件只有在两种情况下会被渲染.
         - 浅对比Props.
         - 使用全局状态的redux.

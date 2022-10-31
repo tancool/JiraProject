@@ -12,7 +12,7 @@ import { resetRute } from 'utils';
 import { ProjectModal } from 'screens/projectList/project-modal';
 import { ProjectPopover } from 'components/project-popover';
 import { UserPopover } from 'components/user-popover ';
-export const AuthenticatedApp = () => {
+const AuthenticatedApp = () => {
   return <div>
     <Container>
       <Router>
@@ -88,7 +88,7 @@ overflow: hidden;
 //   grid-area: footer;
 // `
 const FullWidthDiv = styled.div`
-width:100%
+width:100%;
 `
 
 const User = () => {
@@ -108,3 +108,6 @@ const User = () => {
     </Button>
   </Dropdown>
 }
+
+
+export default AuthenticatedApp;
