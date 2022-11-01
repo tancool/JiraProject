@@ -47,6 +47,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
   // });
   const reducer = (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action });
   const [state, dispatch] = useReducer(reducer, {
+    ...defaultInitialState,
     ...initialState
   })
 
