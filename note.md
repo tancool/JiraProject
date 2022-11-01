@@ -1727,15 +1727,20 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
   - 粒度是从上往下越来越大的
 ## 090_传统单元测试
 - 依赖
-  - testing-library 已经被预先安装了
-  - @testing-library/react-hooks @testing-library/react-hooks msw也需要安装
+  - testing-library. 这个在React中已经被预先安装了
+  - yarn add @testing-library/react-hooks msw -D
     - msw是mock服务器数据的.而单元测试是不应该去服务器真的请求数据的.
       - 理论上来说,也是可以使用jsonserver请求数据的.但是json-server不是用来做这个事情的.
 - 在src下新建一个文件夹 __tests__
   - 这个是约定俗成的名字.
   - jest的默认设置也是该文件夹
-- 单元测试的整个环境都要求是自己可以控制的.
-  - 所有的请求都是mock的数据,不会是真正的发送出去.
+- 在__test文件夹下新建http.ts测试下http中的一个请求
+  - 单元测试的整个环境都要求是自己可以控制的.
+    - 所有的请求都是mock的数据,不会是真正的发送出去.
+    - 使用jest主要是做单元测试
+- msw是mock服务器数据的
+  - 单元测试是不应该去服务器请求数据的
+  - msw是设计用来进行单元测试数据的.
 - 测试命令是 `npm run test`
   
 ## 091_自动化测试hook
