@@ -44,6 +44,7 @@ test('useAsync 可以异步处理', async () => {
 
   let p: Promise<any>;
 
+  // 相关的异步方法放在act里
   act(() => {
     p = result.current.run(promise)
   });
