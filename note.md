@@ -1746,7 +1746,7 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 ## 091_自动化测试hook
 - 在文件夹__tests__下的use-async下.
 ## 092_自动化测试组件
-- jest是一个测试的框架.
+- jest是一个测试的框架.归根结底还是一个测试JS的框架
     - 在文件夹下mark.tsx下
 - 这种测试粒度比较小.测试的单个组件
 ## 093_用集成测试测试项目列表[上]
