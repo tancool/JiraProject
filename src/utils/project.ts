@@ -18,7 +18,7 @@ export const useProjects = (param?: Partial<Project>) => {
   // }, [param, run, fetchProjects]);
 
   // return result;
-  return useQuery<Project[]>(['projects', param], () => client('projects', { data: param }));
+  return useQuery<Project[]>(['projects', cleanObject(param)], () => client('projects', { data: param }));
 }
 
 export const useEditProject = (queryKey: QueryKey) => {

@@ -1750,18 +1750,21 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
     - 在文件夹下mark.tsx下
 - 这种测试粒度比较小.测试的单个组件
 ## 093_用集成测试测试项目列表[上]
-- 集成测试测试的是组件之间的组合或者函数之间的组合.
+- 集成测试的粒度就会稍微的大一些.
+  - 集成测试测试的是组件之间的组合或者函数之间的组合.
 - 步骤
   - 删除了app.tsx
   - 并在setUpTest.ts中添加了
-  ```
+
+
+```
   window.matchMedia = window.matchMedia || function () {
     return {
         matches: function () { },
         removeListener: function () { }
     }
 }
-  ```
+```
 
 
 - create-react-app中有一个限制.是不可以引用src文件夹之外的内容

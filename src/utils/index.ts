@@ -5,7 +5,10 @@ export const isFalsely = (value: any) => value === 0 ? false : !value;
 export const isVoid = (value: unknown) => value === null || value === undefined || value === '';
 
 // 由于可能存在 name值为空的情况,这些参数是不能够传递给后端的.所以要尽量避免这种歧义的存在
-export const cleanObject = (object: { [key: string]: unknown }) => {
+export const cleanObject = (object?: { [key: string]: unknown }) => {
+  if (!object) {
+    return {};
+  }
   const result = { ...object };
   Object.keys(result).forEach(key => {
     const value = result[key];
@@ -73,12 +76,12 @@ export const resetRute = () => window.location.href = window.location.origin;
 /**
  * 返回组件的挂载状态, 如果还没挂载或者已经卸载, 返回false. 反之,返回true.
 */
-export const useMountedRef = ()=>{
+export const useMountedRef = () => {
   const mountedRef = useRef(false);
 
   useEffect(() => {
     mountedRef.current = true;
-    return ()=>{
+    return () => {
       mountedRef.current = false;
     }
   })
