@@ -1752,8 +1752,11 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 ## 093_用集成测试测试项目列表[上]
 - 集成测试的粒度就会稍微的大一些.
   - 集成测试测试的是组件之间的组合或者函数之间的组合.
+- setUpTest的作用是
+- src里不可以引用src外部文件夹中的文件
 - 步骤
-  - 删除了app.tsx
+  - 在setUpTest添加如下代码
+  - 删除了App.test.tsx
   - 并在setUpTest.ts中添加了
 
 
@@ -1768,7 +1771,10 @@ export const ErrorBox = ({ error }: { error: unknown }) => {
 
 
 - create-react-app中有一个限制.是不可以引用src文件夹之外的内容
+- 这里的Integration test是跑在node里的, 使用的是js dom, 并不是真正的运行在浏览器里的.所以没办法去完整的模拟url中发生的事情.
 - 这里集成测试,失败了.可能是由于代码细节和老师实际写的不一样.
   - 但是测试逻辑代码是一致的.
 
 ## 093_用集成测试测试项目列表[下]
+- 092已经完整包括了这节课的内容.
+- testing-library/react是现在非常流行的测试React的一个库

@@ -7,7 +7,6 @@ import { ReactComponent as SoftWareLogo } from 'assets/software-logo.svg';
 import { Button, Dropdown, Menu } from 'antd';
 import { Navigate, Route, Routes } from 'react-router';
 import { ProjectScreen } from 'screens/project';
-import { BrowserRouter as Router } from 'react-router-dom'
 import { resetRute } from 'utils';
 import { ProjectModal } from 'screens/projectList/project-modal';
 import { ProjectPopover } from 'components/project-popover';
@@ -15,7 +14,6 @@ import { UserPopover } from 'components/user-popover ';
 const AuthenticatedApp = () => {
   return <div>
     <Container>
-      <Router>
         <PageHeader />
         <Main>
           <FullWidthDiv>
@@ -27,7 +25,6 @@ const AuthenticatedApp = () => {
           </FullWidthDiv>
         </Main>
         <ProjectModal />
-      </Router>
     </Container>
   </div>
 }

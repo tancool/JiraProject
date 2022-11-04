@@ -4,3 +4,10 @@
 // learn more: https://github.com/testing-library/jest-dom
 // 用来配置单元测试
 import '@testing-library/jest-dom';
+
+window.matchMedia = window.matchMedia || function () {
+  return {
+      matches: function () { },
+      removeListener: function () { }
+  }
+}
